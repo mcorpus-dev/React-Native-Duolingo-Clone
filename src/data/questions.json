@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "type": "IMAGE_MULTIPLE_CHOICE",
+    "type": "MULTIPLE_CHOICE",
     "question": "Which of these is \"the glass?\"",
     "options": [
       {
@@ -38,7 +38,7 @@
   },
   {
     "id": 6,
-    "type": "IMAGE_MULTIPLE_CHOICE",
+    "type": "MULTIPLE_CHOICE",
     "question": "Which of these is \"the coffee?\"",
     "options": [
       {
