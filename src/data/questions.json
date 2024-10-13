@@ -2,7 +2,7 @@
   {
     "id": 1,
     "type": "MULTIPLE_CHOICE",
-    "question": "Which of these is \"the glass?\"",
+    "question": "Which of these is \"the glass\"?",
     "options": [
       {
         "id": 1,
@@ -39,7 +39,7 @@
   {
     "id": 6,
     "type": "MULTIPLE_CHOICE",
-    "question": "Which of these is \"the coffee?\"",
+    "question": "Which of these is \"the coffee\"?",
     "options": [
       {
         "id": 1,

@@ -14,11 +14,23 @@ export default function App() {
   const [questionIndex, setQuestionIndex] = useState(0);
 
   const handleCorrect = () => {
+    if (questionIndex + 1 === questions.length) {
+      Alert.alert("You Won!", "Please restart the game.", [
+        { text: "OK", onPress: restartGame },
+      ]);
+
+      return;
+    }
+
     setQuestionIndex((currentQuestionIndex) => currentQuestionIndex + 1);
   };
 
   const handleIncorrect = () => {
-    Alert.alert("Sorry", "Answer is incorrect.");
+    Alert.alert("Sorry!", "Answer is incorrect.");
+  };
+
+  const restartGame = () => {
+    setQuestionIndex(0);
   };
 
   return (

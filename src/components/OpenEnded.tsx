@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { StyleSheet, Image, View, Text, TextInput } from "react-native";
+import {
+  StyleSheet,
+  KeyboardAvoidingView,
+  Image,
+  View,
+  Text,
+  TextInput,
+} from "react-native";
 
 import Question from "./Question";
 import Button from "./Button";
@@ -28,7 +35,11 @@ const OpenEnded = ({ question, onCorrect, onIncorrect }: Props) => {
   };
 
   return (
-    <>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior="padding"
+      keyboardVerticalOffset={12}
+    >
       <Question text="Translate this sentence" />
 
       <View style={styles.container}>
@@ -59,7 +70,7 @@ const OpenEnded = ({ question, onCorrect, onIncorrect }: Props) => {
       </View>
 
       <Button text="Check" disabled={!answer.trim()} onPress={handleCheck} />
-    </>
+    </KeyboardAvoidingView>
   );
 };
 
