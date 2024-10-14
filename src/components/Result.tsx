@@ -5,27 +5,36 @@ import Button from "./Button";
 import colors from "../theme/colors";
 
 interface Props {
+  isWinner: boolean;
   onRestart: () => void;
 }
 
-const Congratulations = ({ onRestart }: Props) => {
+const Congratulations = ({ isWinner, onRestart }: Props) => {
   return (
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={require("../../assets/images/trophy.png")}
+        source={
+          isWinner
+            ? require("../../assets/images/winner.png")
+            : require("../../assets/images/loser.png")
+        }
         resizeMode="contain"
       />
 
-      <Text style={styles.headerText}>Congratulations!</Text>
+      <Text style={[styles.headerText, isWinner && styles.winnerHeaderText]}>
+        {isWinner ? "Congratulations!" : "Game Over!"}
+      </Text>
 
       <Text style={styles.subHeaderText}>
-        You've conquered the Spanish skill tree!
+        {isWinner
+          ? "You've conquered the spanish skill tree."
+          : "Your journey ends here… for now."}
       </Text>
 
       <Button
         containerStyle={styles.button}
-        text="Play Again"
+        text={isWinner ? "Play Again" : "Restart Game"}
         onPress={onRestart}
       />
     </View>
@@ -45,9 +54,12 @@ const styles = StyleSheet.create({
     height: 300,
   },
   headerText: {
-    color: colors.yellow,
+    color: colors.red,
     fontFamily: "quicksand-bold",
     fontSize: 24,
+  },
+  winnerHeaderText: {
+    color: colors.yellow,
   },
   subHeaderText: {
     color: colors.white,

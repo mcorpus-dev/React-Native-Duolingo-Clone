@@ -5,7 +5,7 @@ import ScreenWrapper from "./src/components/ScreenWrapper";
 import Header from "./src/components/Header";
 import MultipleChoice from "./src/components/MultipleChoice";
 import OpenEnded from "./src/components/OpenEnded";
-import Congratulations from "./src/components/Congratulations";
+import Result from "./src/components/Result";
 
 import IMultipleChoice from "./src/types/IMultipleChoice";
 import IOpenEnded from "./src/types/IOpenEnded";
@@ -21,11 +21,7 @@ export default function App() {
   const progress = ((questionIndex + 1) / questions.length) * 100;
 
   useEffect(() => {
-    if (health === 0) {
-      Alert.alert("You Lose!", "Please restart the game.", [
-        { text: "OK", onPress: handleRestart },
-      ]);
-    } else if (health < INITIAL_HEALTH) {
+    if (health > 0 && health < INITIAL_HEALTH) {
       Alert.alert("Sorry!", "Incorrect answer.");
     }
   }, [health]);
@@ -40,8 +36,13 @@ export default function App() {
     setQuestionIndex(0);
   };
 
-  if (questionIndex === questions.length) {
-    return <Congratulations onRestart={handleRestart} />;
+  if (questionIndex === questions.length || health === 0) {
+    return (
+      <Result
+        isWinner={questionIndex === questions.length}
+        onRestart={handleRestart}
+      />
+    );
   }
 
   return (
