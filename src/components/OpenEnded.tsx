@@ -22,6 +22,7 @@ interface Props {
 }
 
 const OpenEnded = ({ question, onCorrect, onIncorrect }: Props) => {
+  const [isTextInputFocus, setIsTextInputFocus] = useState(false);
   const [answer, setAnswer] = useState("");
 
   const handleCheck = () => {
@@ -56,9 +57,14 @@ const OpenEnded = ({ question, onCorrect, onIncorrect }: Props) => {
         </View>
 
         <TextInput
-          style={styles.textInput}
+          style={[
+            styles.textInput,
+            isTextInputFocus && styles.focusedTextInput,
+          ]}
           value={answer}
           onChangeText={setAnswer}
+          onFocus={() => setIsTextInputFocus(true)}
+          onBlur={() => setIsTextInputFocus(false)}
           placeholder="Type in English"
           placeholderTextColor={colors.white}
           multiline
@@ -103,13 +109,16 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    borderColor: colors.green,
+    borderColor: colors.darkGrey,
     borderWidth: 2,
     borderRadius: 10,
     color: colors.white,
     fontFamily: "quicksand-regular",
     fontSize: 18,
     padding: 12,
+  },
+  focusedTextInput: {
+    borderColor: colors.green,
   },
 });
 

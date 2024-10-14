@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import ScreenWrapper from "./src/components/ScreenWrapper";
 import Header from "./src/components/Header";
 import MultipleChoice from "./src/components/MultipleChoice";
 import OpenEnded from "./src/components/OpenEnded";
-import Congratulations from "./src/components/Congratulations";
+import Result from "./src/components/Result";
 
 import IMultipleChoice from "./src/types/IMultipleChoice";
 import IOpenEnded from "./src/types/IOpenEnded";
@@ -15,33 +16,60 @@ import questions from "./src/data/questions.json";
 const INITIAL_HEALTH = 5;
 
 export default function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [health, setHealth] = useState(INITIAL_HEALTH);
   const [questionIndex, setQuestionIndex] = useState(0);
 
   const progress = ((questionIndex + 1) / questions.length) * 100;
 
   useEffect(() => {
-    if (health === 0) {
-      Alert.alert("You Lose!", "Please restart the game.", [
-        { text: "OK", onPress: handleRestart },
-      ]);
-    } else if (health < INITIAL_HEALTH) {
-      Alert.alert("Sorry!", "Incorrect answer.");
+    const handleLoadData = async () => {
+      const _health = await AsyncStorage.getItem("health");
+      const _questionIndex = await AsyncStorage.getItem("questionIndex");
+
+      if (_health) setHealth(Number(_health));
+      if (_questionIndex) setQuestionIndex(Number(_questionIndex));
+
+      setIsLoaded(true);
+    };
+
+    handleLoadData();
+  }, []);
+
+  useEffect(() => {
+    const handleSaveData = async () => {
+      await AsyncStorage.setItem("health", String(health));
+      await AsyncStorage.setItem("questionIndex", String(questionIndex));
+    };
+
+    if (isLoaded) {
+      handleSaveData();
     }
-  }, [health]);
+  }, [isLoaded, health, questionIndex]);
 
   const handleCorrect = () =>
     setQuestionIndex((currentQuestionIndex) => currentQuestionIndex + 1);
 
-  const handleIncorrect = () => setHealth((currentHealth) => currentHealth - 1);
+  const handleIncorrect = () => {
+    setHealth((currentHealth) => currentHealth - 1);
+
+    if (health - 1 > 0 && health - 1 < INITIAL_HEALTH) {
+      Alert.alert("Sorry!", "Incorrect answer.");
+    }
+  };
 
   const handleRestart = () => {
     setHealth(5);
     setQuestionIndex(0);
   };
 
-  if (questionIndex === questions.length) {
-    return <Congratulations onRestart={handleRestart} />;
+  if (questionIndex === questions.length || health === 0) {
+    return (
+      <Result
+        isWinner={questionIndex === questions.length}
+        onRestart={handleRestart}
+      />
+    );
   }
 
   return (
