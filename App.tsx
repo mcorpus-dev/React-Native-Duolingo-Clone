@@ -76,23 +76,21 @@ export default function App() {
     <ScreenWrapper>
       <Header progress={progress} health={health} />
 
-      {questions[questionIndex] &&
-        questions[questionIndex].type === "MULTIPLE_CHOICE" && (
-          <MultipleChoice
-            question={questions[questionIndex] as IMultipleChoice}
-            onCorrect={handleCorrect}
-            onIncorrect={handleIncorrect}
-          />
-        )}
+      {questions[questionIndex].type === "MULTIPLE_CHOICE" && (
+        <MultipleChoice
+          question={questions[questionIndex] as IMultipleChoice}
+          onCorrect={handleCorrect}
+          onIncorrect={handleIncorrect}
+        />
+      )}
 
-      {questions[questionIndex] &&
-        questions[questionIndex].type === "OPEN_ENDED" && (
-          <OpenEnded
-            question={questions[questionIndex] as IOpenEnded}
-            onCorrect={handleCorrect}
-            onIncorrect={handleIncorrect}
-          />
-        )}
+      {questions[questionIndex].type === "OPEN_ENDED" && (
+        <OpenEnded
+          question={questions[questionIndex] as IOpenEnded}
+          onCorrect={handleCorrect}
+          onIncorrect={handleIncorrect}
+        />
+      )}
     </ScreenWrapper>
   );
 }
