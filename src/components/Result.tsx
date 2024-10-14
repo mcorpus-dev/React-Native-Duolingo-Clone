@@ -1,5 +1,6 @@
 import { StyleSheet, View, Image, Text } from "react-native";
 
+import ScreenWrapper from "./ScreenWrapper";
 import Button from "./Button";
 
 import colors from "../theme/colors";
@@ -11,33 +12,35 @@ interface Props {
 
 const Congratulations = ({ isWinner, onRestart }: Props) => {
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={
-          isWinner
-            ? require("../../assets/images/winner.png")
-            : require("../../assets/images/loser.png")
-        }
-        resizeMode="contain"
-      />
+    <ScreenWrapper>
+      <View style={styles.container}>
+        <Image
+          style={styles.image}
+          source={
+            isWinner
+              ? require("../../assets/images/winner.png")
+              : require("../../assets/images/loser.png")
+          }
+          resizeMode="contain"
+        />
 
-      <Text style={[styles.headerText, isWinner && styles.winnerHeaderText]}>
-        {isWinner ? "Congratulations!" : "Game Over!"}
-      </Text>
+        <Text style={[styles.headerText, isWinner && styles.winnerHeaderText]}>
+          {isWinner ? "Congratulations!" : "Game Over!"}
+        </Text>
 
-      <Text style={styles.subHeaderText}>
-        {isWinner
-          ? "You've conquered the spanish skill tree."
-          : "Your journey ends here… for now."}
-      </Text>
+        <Text style={styles.subHeaderText}>
+          {isWinner
+            ? "You've conquered the spanish skill tree."
+            : "Your journey ends here… for now."}
+        </Text>
 
-      <Button
-        containerStyle={styles.button}
-        text={isWinner ? "Play Again" : "Restart Game"}
-        onPress={onRestart}
-      />
-    </View>
+        <Button
+          containerStyle={styles.button}
+          text={isWinner ? "Play Again" : "Restart Game"}
+          onPress={onRestart}
+        />
+      </View>
+    </ScreenWrapper>
   );
 };
 
@@ -46,7 +49,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 12,
     backgroundColor: colors.black,
   },
   image: {
