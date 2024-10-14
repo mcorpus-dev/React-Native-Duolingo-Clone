@@ -25,7 +25,7 @@ const Congratulations = ({ onRestart }: Props) => {
 
       <Button
         containerStyle={styles.button}
-        text="Restart Game"
+        text="Play Again"
         onPress={onRestart}
       />
     </View>

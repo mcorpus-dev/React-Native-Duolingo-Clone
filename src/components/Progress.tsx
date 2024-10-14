@@ -9,7 +9,9 @@ interface Props {
 const Progress = ({ progress }: Props) => {
   return (
     <View style={styles.container}>
-      <View style={[styles.progress, { width: `${progress}%` }]} />
+      <View style={[styles.progress, { width: `${progress}%` }]}>
+        <View style={styles.highlight} />
+      </View>
     </View>
   );
 };
@@ -25,6 +27,14 @@ const styles = StyleSheet.create({
   },
   progress: {
     backgroundColor: colors.darkYellow,
+    justifyContent: "center",
+    borderRadius: 10,
+  },
+  highlight: {
+    backgroundColor: colors.yellow,
+    height: 8,
+    marginHorizontal: 8,
+    borderRadius: 10,
   },
 });
 
